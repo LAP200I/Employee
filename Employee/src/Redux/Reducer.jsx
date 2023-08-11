@@ -27,12 +27,12 @@ export const Reducer = (state = initialstate, action) => {
         userlist: action.payload,
         userobj: {},
       };
-    case ActionType.GET_USER:
-      return {
-        ...state,
-        loading: false,
-        userobj: action.payload,
-      };
+    // case ActionType.GET_USER:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     userobj: action.payload,
+    //   };
 
     case ActionType.DELETE_USER:
       return {

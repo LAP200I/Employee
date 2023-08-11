@@ -1,20 +1,31 @@
-import React, { useState, useEffect } from "react";
 import PublicLayout from "../../layout";
 import ListEmployee from "./ListEmployee";
+import { Box } from "@mui/material";
 import SearchBar from "../../component/Search/SeacrhBar";
+import "./index.css";
 
 export default function ListEmployeePage() {
   return (
     <>
       <PublicLayout>
-        <SearchBar
+        <Box
           sx={{
-            margin: "20px 0",
             width: "100%",
-            bgcolor: "background.paper",
+            maxWidth: "80%",
+            margin: "20px auto",
           }}
-        />
-        <ListEmployee />
+        >
+          <SearchBar
+            sx={
+              {
+                // margin: "20px 0",
+                // bgcolor: "background.paper",
+              }
+            }
+          />
+
+          <ListEmployee />
+        </Box>
       </PublicLayout>
     </>
   );

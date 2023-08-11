@@ -5,7 +5,6 @@ import {
   useNavigate,
 } from "react-router-dom";
 import "./App.css";
-import Pages from "./pages/Pages";
 import "@fontsource/inter";
 import { Provider } from "react-redux";
 import Store from "./Redux/Store";
@@ -14,6 +13,13 @@ import { AuthContextProvider } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "./context/AuthContext";
+import UpdateEmployee from "./pages/UpdateEmployee/UpdateEmployee";
+import AddPage from "./pages/AddEmployee/AddPage";
+import Home from "./pages/Home/Home";
+import UpdatePage from "./pages/UpdateEmployee/UpdatePage";
+import { redirect } from "react-router-dom";
+import { ProtectedRoute } from "./ProtectedRoute";
+import { Navigate } from "react-router-dom";
 
 function App() {
   const { user } = useAuth();
@@ -24,12 +30,19 @@ function App() {
         <Provider store={Store}>
           <Router>
             <Routes>
-              <Route path="/" exact element={<Pages />} />
+              <Route path="/" exact element={<Home />} />
               <Route exact path="/employee" element={<ListEmployeePage />} />
-              {/* {!user && <Route exact path="/" element={<Pages />} />}
-              {user && (
-                <Route exact path="/employee" element={<ListEmployeePage />} />
-              )} */}
+
+              {/* <Route
+                path="/employee"
+                element={
+                  <ProtectedRoute>
+                    <ListEmployeePage />
+                  </ProtectedRoute>
+                }
+              /> */}
+              <Route exact path="/employee/:id" element={<UpdatePage />} />
+              <Route exact path="/employee/add" element={<AddPage />} />
             </Routes>
           </Router>
         </Provider>

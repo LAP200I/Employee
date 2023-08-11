@@ -1,14 +1,11 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useLocalStorage } from "./useLocalStorage";
 
 export const AuthContext = React.createContext({});
-
 export const useAuth = () => useContext(AuthContext);
-
 export function AuthContextProvider({ children }) {
   const [user, setUser] = useState(null);
-  // if the user does not login, the user can not access the ListEmployeePage
-  // * if the user login, the user can access the ListEmployeePage
-
   useEffect(() => {
     if (user) {
       localStorage.setItem("user", JSON.stringify(user));
@@ -32,6 +29,28 @@ export function AuthContextProvider({ children }) {
     }),
     [user]
   );
+  // const [user, setUser] = useLocalStorage("user", null);
+  // const navigate = useNavigate();
 
+  // // call this function when you want to authenticate the user
+  // const login = async (data) => {
+  //   setUser(data);
+  //   navigate("/employee");
+  // };
+
+  // // call this function to sign out logged in user
+  // const logout = () => {
+  //   setUser(null);
+  //   navigate("/", { replace: true });
+  // };
+
+  // const value = useMemo(
+  //   () => ({
+  //     user,
+  //     login,
+  //     logout,
+  //   }),
+  //   [user]
+  // );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

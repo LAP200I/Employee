@@ -1,8 +1,12 @@
-import axios from "axios";
 import { toast } from "react-toastify";
-// import Updateuser from "../Component/Updateuser";
 import { ActionType } from "./ActionType";
-import { getEmployee } from "../api/GetEmployee";
+import {
+  getEmployee,
+  getEmployeeById,
+  addEmployee,
+  updateEmployee,
+  deleteEmployee,
+} from "../api/Employee";
 
 export const makeRequest = () => {
   return {
@@ -21,12 +25,6 @@ export const geUserList = (data) => {
     payload: data,
   };
 };
-export const getUser = (data) => {
-  return {
-    type: ActionType.GET_USER,
-    payload: data,
-  };
-};
 
 export const deleteUser = () => {
   return {
@@ -38,104 +36,104 @@ export const addUser = () => {
     type: ActionType.ADD_USER,
   };
 };
-// export const updateUser = () => {
-//   return {
-//     type: UPDATE_USER,
-//   };
-// };
+export const updateUser = () => {
+  return {
+    type: ActionType.UPDATE_USER,
+  };
+};
 export const getUserObj = (data) => {
   return {
     type: ActionType.GET_USER_OBJ,
     payload: data,
   };
 };
+// getEmployee(page)
 
-export const FetchUserList = () => {
+export const FetchUserList = (page) => {
   return (dispatch) => {
     dispatch(makeRequest());
 
     const fetchEmployee = async () => {
-      const res = await getEmployee();
+      const res = await getEmployee(page);
       dispatch(geUserList(res.data.data));
+      console.log("res.data.data", res.data);
     };
-    fetchEmployee();
+    try {
+      fetchEmployee();
+    } catch (err) {
+      dispatch(failRequest(err.message));
+      toast.error("Error in fetching data.");
+    }
   };
 };
+// export const FetchUserList = (page) => {
+//   return (dispatch) => {
+//     dispatch(makeRequest());
 
-export const FetchUser = (id) => {
+//     const fetchEmployee = async () => {
+//       const res = await getEmployee(page);
+//       dispatch(geUserList(res.data.data));
+//       console.log("res.data.data", res.data);
+//     };
+//     try {
+//       fetchEmployee();
+//     } catch (err) {
+//       dispatch(failRequest(err.message));
+//       toast.error("Error in fetching data.");
+//     }
+//   };
+// };
+
+export const FetchUserObj = (code) => {
   return (dispatch) => {
     dispatch(makeRequest());
 
     const fetchEmployee = async () => {
-      const res = await getEmployeeById(id);
-      dispatch(getUser(res.data.data));
+      const res = await getEmployeeById(code);
+      dispatch(getUserObj(res.data.data));
+      toast.success("User Fetched successfully.");
     };
-    fetchEmployee();
+    try {
+      console.log(code);
+      fetchEmployee();
+    } catch (err) {
+      dispatch(failRequest(err.message));
+      toast.error("User Fetch Failed.");
+    }
+  };
+};
+export const FunctionUpdateEmployee = (data, code) => {
+  return (dispatch) => {
+    dispatch(makeRequest());
+    const updateEmployee = async () => {
+      const res = await updateEmployee(code, data);
+      dispatch(updateUser());
+      toast.success("User Updated successfully.");
+    };
+    updateEmployee();
   };
 };
 
-// export const RemoveUser = (code) => {
-//   return (dispatch) => {
-//     dispatch(makeRequest());
-//     //setTimeout(() => {
-//     axios
-//       .delete("http://localhost:8000/user/" + code)
-//       .then((res) => {
-//         dispatch(deleteUser());
-//       })
-//       .catch((err) => {
-//         dispatch(failRequest(err.message));
-//       });
-//     // }, 2000);
-//   };
-// };
+export const RemoveUser = (code) => {
+  return (dispatch) => {
+    dispatch(makeRequest());
+    const deleteEmployee = async () => {
+      const res = await deleteEmployee(code);
+      dispatch(deleteUser());
+      toast.success("User Deleted successfully.");
+    };
+    deleteEmployee();
+  };
+};
 
-// export const FunctionAddUser = (data) => {
-//   return (dispatch) => {
-//     dispatch(makeRequest());
-//     //setTimeout(() => {
-//     axios
-//       .post("http://localhost:8000/user", data)
-//       .then((res) => {
-//         dispatch(addUser());
-//         toast.success("User Added successfully.");
-//       })
-//       .catch((err) => {
-//         dispatch(failRequest(err.message));
-//       });
-//     // }, 2000);
-//   };
-// };
-
-// export const FunctionUpdateUser = (data, code) => {
-//   return (dispatch) => {
-//     dispatch(makeRequest());
-//     //setTimeout(() => {
-//     axios
-//       .put("http://localhost:8000/user/" + code, data)
-//       .then((res) => {
-//         dispatch(updateUser());
-//         toast.success("User Updated successfully.");
-//       })
-//       .catch((err) => {
-//         dispatch(failRequest(err.message));
-//       });
-//     // }, 2000);
-//   };
-// };
-// export const FetchUserObj = (code) => {
-//   return (dispatch) => {
-//     dispatch(makeRequest());
-//     //setTimeout(() => {
-//     axios
-//       .get("http://localhost:8000/user/" + code)
-//       .then((res) => {
-//         const userlist = res.data;
-//         dispatch(getUserObj(userlist));
-//       })
-//       .catch((err) => {
-//         dispatch(failRequest(err.message));
-//       });
-//     // }, 2000);
-//   };
-// };
+export const FunctionAddUser = (data) => {
+  return (dispatch) => {
+    dispatch(makeRequest());
+    const addEmployee = async () => {
+      const res = await addEmployee(data);
+      dispatch(addUser());
+      toast.success("User Added successfully.");
+    };
+    addEmployee();
+  };
+};

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -16,49 +16,39 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { FetchUserList, RemoveUser } from "../../Redux/Action";
+import { FetchUserList } from "../../Redux/Action";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css";
-import ReactPaginate from "react-paginate";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
 
 const ListEmployee = (props) => {
   const navigate = useNavigate();
-  const [pageCount, setPageCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-
   useEffect(() => {
-    props.loaduser(currentPage);
-
-    setPageCount(props.user.totalPages);
-    console.log(props, "prop");
-  }, [currentPage]);
-
-  const handlePageClick = ({ selected: selectedPage }) => {
-    setCurrentPage(selectedPage);
-  };
-
-  const handleDelete = (code, name) => {
-    confirmAlert({
-      title: "Confirm to Delete",
-      message: `Are you sure to delete '${name}'.`,
-      buttons: [
-        {
-          label: "Yes",
-          onClick: () => {
-            props.removeuser(code);
-            toast.success("User Deleted Successfully");
-          },
-        },
-        {
-          label: "No",
-          onClick: () => {
-            // console.log("No");
-          },
-        },
-      ],
-    });
+    props.loaduser();
+  }, []);
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/", { replace: true });
+    toast.success("Logout successfully");
   };
 
   return props.user.loading ? (
@@ -78,7 +68,24 @@ const ListEmployee = (props) => {
     </>
   ) : (
     <>
-      <Link to="/" sx={{ textDecoration: "none" }}></Link>
+      <Link to="/" sx={{ textDecoration: "none" }}>
+        <Button
+          variant="contained"
+          color="error"
+          sx={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            transform: "translate(-20%, 30%)",
+          }}
+          onClick={() => {
+            handleLogout();
+          }}
+        >
+          Logout
+        </Button>
+      </Link>
+
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
@@ -124,23 +131,8 @@ const ListEmployee = (props) => {
                         variant="outlined"
                         aria-label="outlined secondary button group"
                       >
-                        <Button
-                          onClick={() => {
-                            navigate(`/employee/${user.id}`);
-                          }}
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          onClick={() => {
-                            handleDelete(
-                              user.id,
-                              user.first_name + " " + user.last_name
-                            );
-                          }}
-                        >
-                          Delete
-                        </Button>
+                        <Button>Edit</Button>
+                        <Button>Delete</Button>
                       </ButtonGroup>
                     </StyledTableCell>
                   </StyledTableRow>
@@ -150,14 +142,6 @@ const ListEmployee = (props) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <ReactPaginate
-        previousLabel={"← Previous"}
-        nextLabel={"Next →"}
-        pageCount={pageCount}
-        onPageChange={handlePageClick}
-        containerClassName={"pagination"}
-        activeClassName={"active"}
-      />
     </>
   );
 };
@@ -167,30 +151,11 @@ const mapStateToProps = (state) => {
     user: state.user,
   };
 };
-
-const mapDispatchToProps = (dispatch) => ({
-  loaduser: (currentPage) => dispatch(FetchUserList(currentPage)),
-  removeuser: (code) => dispatch(RemoveUser(code)),
-});
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loaduser: () => dispatch(FetchUserList()),
+    // removeuser: (code) => dispatch(Removeuser(code)),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListEmployee);
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));

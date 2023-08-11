@@ -1,21 +1,25 @@
 import { Container, InputAdornment, TextField } from "@mui/material";
 import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchBar() {
   const [searchTerm, setSearchTerm] = useState("");
-
+  const navigate = useNavigate();
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
   return (
     <Container
-      width="50%"
       sx={{
-        width: "100%",
+        // width: "100%",
+        // maxWidth: "80%",
+        padding: "10px 0 !important",
+        margin: "0px",
         alignItems: "center",
-        justifyContent: "center",
+        maxWidth: "100% !important",
         display: "flex",
       }}
     >
@@ -26,6 +30,7 @@ export default function SearchBar() {
         value={searchTerm}
         onChange={handleChange}
         sx={{
+          marginRight: "auto",
           alignSelf: "center",
           backgroundColor: "white",
           borderRadius: "5px",
@@ -41,6 +46,20 @@ export default function SearchBar() {
           ),
         }}
       />
+      {/* button add */}
+      <Button
+        variant="contained"
+        color="primary"
+        sx={{
+          marginLeft: "auto",
+          padding: "10px 20px",
+        }}
+        onClick={() => {
+          navigate("/employee/add");
+        }}
+      >
+        Add Employee
+      </Button>
     </Container>
   );
 }
