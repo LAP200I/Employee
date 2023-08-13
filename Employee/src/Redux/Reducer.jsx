@@ -25,14 +25,14 @@ export const Reducer = (state = initialstate, action) => {
         loading: false,
         errmessage: "",
         userlist: action.payload,
-        userobj: {},
+        userobj: "",
       };
-    // case ActionType.GET_USER:
-    //   return {
-    //     ...state,
-    //     loading: false,
-    //     userobj: action.payload,
-    //   };
+    case ActionType.GET_DATA:
+      return {
+        ...state,
+        loading: false,
+        userobj: action.payload,
+      };
 
     case ActionType.DELETE_USER:
       return {

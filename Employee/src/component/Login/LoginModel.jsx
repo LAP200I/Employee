@@ -99,7 +99,12 @@ export default function LoginModal() {
                           <FormLabel>
                             <Typography>Email</Typography>
                           </FormLabel>
-                          <OutlinedInput {...input} />
+                          <OutlinedInput
+                            {...input}
+                            sx={{
+                              backgroundColor: "silver",
+                            }}
+                          />
                           {errors.email && meta.touched && (
                             <FormHelperText>{errors.email}</FormHelperText>
                           )}
@@ -127,7 +132,12 @@ export default function LoginModal() {
                           <FormLabel>
                             <Typography>Password</Typography>
                           </FormLabel>
-                          <OutlinedInput {...input} />
+                          <OutlinedInput
+                            {...input}
+                            sx={{
+                              backgroundColor: "silver",
+                            }}
+                          />
                           {errors.password && meta.touched && (
                             <FormHelperText>{errors.password}</FormHelperText>
                           )}

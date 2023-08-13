@@ -1,7 +1,8 @@
 import { createTheme } from '@mui/material/styles';
 const themeColors = {
   primary: {
-    base: '#5048E5',
+    base: '#008080',
+    // base: '#5048E5',
     lightness2: '#93CAFE',
     lightness3: '#C9E4FE',
     lightness4: '#E0EFFE',
@@ -25,7 +26,7 @@ const themeColors = {
     darkness5: '#111827',
   },
   danger: {
-    base: '#FE025F',
+    base: '#B22222',
     lightness1: '#FF004D',
     lightness2: '#F78D8D',
     lightness3: '#FEC8D0',

@@ -16,27 +16,33 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { FetchUserList, RemoveUser } from "../../Redux/Action";
+import { FetchData, FetchUserList, RemoveUser } from "../../Redux/Action";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css";
 import ReactPaginate from "react-paginate";
 
 const ListEmployee = (props) => {
   const navigate = useNavigate();
-  const [pageCount, setPageCount] = useState(0);
+  const [pageCount, setPageCount] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    props.loaduser(currentPage);
+    // props.loaduser(currentPage);
+    props.loadData(currentPage);
+    setPageCount(props.userobj.total_pages);
+  }, [currentPage, props.userobj.total_pages]);
+  console.log(props.user.userobj, "userobj");
+  console.log("currentPage", currentPage);
+  console.log("total_pages", props.userobj.total_pages);
 
-    setPageCount(props.user.totalPages);
-    console.log(props, "prop");
-  }, [currentPage]);
-
-  const handlePageClick = ({ selected: selectedPage }) => {
-    setCurrentPage(selectedPage);
+  const handlePageClick = (event) => {
+    if (event && event.target) {
+      console.log(event.target.value);
+      const selectedPage = event.target + 1;
+      setCurrentPage(selectedPage);
+      props.loadData(selectedPage);
+    }
   };
 
   const handleDelete = (code, name) => {
@@ -45,16 +51,16 @@ const ListEmployee = (props) => {
       message: `Are you sure to delete '${name}'.`,
       buttons: [
         {
+          label: "No",
+          onClick: () => {
+            // console.log("No");
+          },
+        },
+        {
           label: "Yes",
           onClick: () => {
             props.removeuser(code);
             toast.success("User Deleted Successfully");
-          },
-        },
-        {
-          label: "No",
-          onClick: () => {
-            // console.log("No");
           },
         },
       ],
@@ -72,9 +78,9 @@ const ListEmployee = (props) => {
         <LinearProgress />
       </Box>
     </>
-  ) : props.user.errmessage ? (
+  ) : props.user.userobj.errmessage ? (
     <>
-      <h2>{props.user.errmessage}</h2>
+      <h2>{props.user.userobj.errmessage}</h2>
     </>
   ) : (
     <>
@@ -91,22 +97,19 @@ const ListEmployee = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.user.userlist.map((user) => {
+            {props.user.userobj.data.map((user) => {
+              // {props.userobj.data.map((user) => {
               return (
                 <>
                   <StyledTableRow align="center" key={user.id}>
                     <StyledTableCell component="th" scope="row">
                       <ListItemAvatar align="center">
-                        {/* <Avatar alt="Remy Sharp" src={user.avatar} loading="lazy" /> */}
+                        {/* <Avatar alt=" " src={user.avatar} loading="lazy" /> */}
                         {user.avatar ? (
-                          <Avatar
-                            alt="Remy Sharp"
-                            src={user.avatar}
-                            loading="lazy"
-                          />
+                          <Avatar alt=" " src={user.avatar} loading="lazy" />
                         ) : (
                           <Avatar
-                            alt="Remy Sharp"
+                            alt=" "
                             src="https://www.w3schools.com/howto/img_avatar.png"
                           />
                         )}
@@ -154,9 +157,16 @@ const ListEmployee = (props) => {
         previousLabel={"← Previous"}
         nextLabel={"Next →"}
         pageCount={pageCount}
-        onPageChange={handlePageClick}
+        onPageChange={(event) => {
+          handlePageClick(event);
+          console.log(event);
+        }}
         containerClassName={"pagination"}
         activeClassName={"active"}
+        pageClassName={"page-item"}
+        pageLinkClassName={"page-link"}
+        previousClassName={"page-item"}
+        nextClassName={"page-item"}
       />
     </>
   );
@@ -165,12 +175,15 @@ const ListEmployee = (props) => {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
+    userobj: state.user.userobj,
+    data: state.user.userobj.data,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   loaduser: (currentPage) => dispatch(FetchUserList(currentPage)),
   removeuser: (code) => dispatch(RemoveUser(code)),
+  loadData: (currentPage) => dispatch(FetchData(currentPage)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListEmployee);

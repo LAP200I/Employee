@@ -19,13 +19,18 @@ export const failRequest = (err) => {
     payload: err,
   };
 };
+export const getData = (data) => {
+  return {
+    type: ActionType.GET_DATA,
+    payload: data,
+  };
+};
 export const geUserList = (data) => {
   return {
     type: ActionType.GET_USER_LIST,
     payload: data,
   };
 };
-
 export const deleteUser = () => {
   return {
     type: ActionType.DELETE_USER,
@@ -56,7 +61,6 @@ export const FetchUserList = (page) => {
     const fetchEmployee = async () => {
       const res = await getEmployee(page);
       dispatch(geUserList(res.data.data));
-      console.log("res.data.data", res.data);
     };
     try {
       fetchEmployee();
@@ -66,6 +70,23 @@ export const FetchUserList = (page) => {
     }
   };
 };
+export const FetchData = (page) => {
+  return (dispatch) => {
+    dispatch(makeRequest());
+
+    const fetchEmployee = async () => {
+      const res = await getEmployee(page);
+      dispatch(getData(res.data));
+    };
+    try {
+      fetchEmployee();
+    } catch (err) {
+      dispatch(failRequest(err.message));
+      toast.error("Error in fetching data.");
+    }
+  };
+};
+
 // export const FetchUserList = (page) => {
 //   return (dispatch) => {
 //     dispatch(makeRequest());

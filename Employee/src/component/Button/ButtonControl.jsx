@@ -1,8 +1,10 @@
-import { Button } from "@mui/material";
+import { Button, Box, Tooltip } from "@mui/material";
+
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import ArrowBackOutlinedIcon from "@material-ui/icons/ArrowBackOutlined";
+import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
 import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css";
 
 export default function ButtonControl() {
   const navigate = useNavigate();
@@ -15,6 +17,12 @@ export default function ButtonControl() {
       message: "",
       buttons: [
         {
+          label: "No",
+          onClick: () => {
+            //
+          },
+        },
+        {
           label: "Yes",
           onClick: () => {
             localStorage.removeItem("user");
@@ -22,47 +30,32 @@ export default function ButtonControl() {
             toast.success("Logout successfully");
           },
         },
-        {
-          label: "No",
-          onClick: () => {
-            //
-          },
-        },
       ],
     });
   };
   return (
-    <>
-      <Button
-        variant="contained"
-        color="error"
-        sx={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          transform: "translate(-20%, 30%)",
-        }}
-        onClick={() => {
-          handleLogout();
-        }}
-      >
-        Logout
-      </Button>
-      <Button
-        variant="outlined"
-        color="success"
-        sx={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          transform: "translate(20%,30% )",
-        }}
-        onClick={() => {
-          navigate("/");
-        }}
-      >
-        Return
-      </Button>
-    </>
+    <Box display="flex" justifyContent="space-between" margin={2}>
+      <Tooltip title="Back" arrow>
+        <Button
+          variant="contained"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          <ArrowBackOutlinedIcon />
+        </Button>
+      </Tooltip>
+      <Tooltip title="Logout" arrow>
+        <Button
+          variant="contained"
+          color="error"
+          onClick={() => {
+            handleLogout();
+          }}
+        >
+          <ExitToAppRoundedIcon />
+        </Button>
+      </Tooltip>
+    </Box>
   );
 }

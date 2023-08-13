@@ -23,12 +23,14 @@ export default function Header() {
             sx={{
               flexGrow: 1,
               display: { xs: "none", sm: "block" },
+              cursor: "pointer",
             }}
             color="#fff"
             onClick={() => {
               navigate("/");
             }}
             pointer="cursor"
+            textTransform={"uppercase"}
           >
             Employee Management
           </Typography>
