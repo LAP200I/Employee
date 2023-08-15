@@ -147,7 +147,7 @@ const themeOptions = {
       main: themeColors.danger.base,
     },
     action: {
-      disabled: themeColors.grey.base,
+      disabled: themeColors.grey.darkness2,
     },
   },
   components: {

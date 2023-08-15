@@ -52,27 +52,9 @@ export const getUserObj = (data) => {
     payload: data,
   };
 };
-// getEmployee(page)
-
-export const FetchUserList = (page) => {
-  return (dispatch) => {
-    dispatch(makeRequest());
-
-    const fetchEmployee = async () => {
-      const res = await getEmployee(page);
-      dispatch(geUserList(res.data.data));
-    };
-    try {
-      fetchEmployee();
-    } catch (err) {
-      dispatch(failRequest(err.message));
-      toast.error("Error in fetching data.");
-    }
-  };
-};
 export const FetchData = (page) => {
   return (dispatch) => {
-    dispatch(makeRequest());
+    // dispatch(makeRequest());
 
     const fetchEmployee = async () => {
       const res = await getEmployee(page);
@@ -87,57 +69,43 @@ export const FetchData = (page) => {
   };
 };
 
-// export const FetchUserList = (page) => {
-//   return (dispatch) => {
-//     dispatch(makeRequest());
-
-//     const fetchEmployee = async () => {
-//       const res = await getEmployee(page);
-//       dispatch(geUserList(res.data.data));
-//       console.log("res.data.data", res.data);
-//     };
-//     try {
-//       fetchEmployee();
-//     } catch (err) {
-//       dispatch(failRequest(err.message));
-//       toast.error("Error in fetching data.");
-//     }
-//   };
-// };
-
 export const FetchUserObj = (code) => {
   return (dispatch) => {
-    dispatch(makeRequest());
-
+    // dispatch(makeRequest());
     const fetchEmployee = async () => {
       const res = await getEmployeeById(code);
       dispatch(getUserObj(res.data.data));
-      toast.success("User Fetched successfully.");
     };
     try {
-      console.log(code);
       fetchEmployee();
+      // toast.success("User Fetched successfully.");
     } catch (err) {
       dispatch(failRequest(err.message));
-      toast.error("User Fetch Failed.");
+      // toast.error("Fail to fetch.");
     }
   };
 };
-export const FunctionUpdateEmployee = (data, code) => {
+
+export const UpdateEmployee = (code, data) => {
   return (dispatch) => {
-    dispatch(makeRequest());
-    const updateEmployee = async () => {
+    // dispatch(makeRequest());
+    const updateEmp = async () => {
       const res = await updateEmployee(code, data);
       dispatch(updateUser());
       toast.success("User Updated successfully.");
     };
-    updateEmployee();
+    try {
+      updateEmp();
+    } catch (err) {
+      dispatch(failRequest(err.message));
+      toast.error("Fail to update.");
+    }
   };
 };
 
 export const RemoveUser = (code) => {
   return (dispatch) => {
-    dispatch(makeRequest());
+    // dispatch(makeRequest());
     const deleteEmployee = async () => {
       const res = await deleteEmployee(code);
       dispatch(deleteUser());
@@ -149,12 +117,38 @@ export const RemoveUser = (code) => {
 
 export const FunctionAddUser = (data) => {
   return (dispatch) => {
-    dispatch(makeRequest());
+    // dispatch(makeRequest());
     const addEmployee = async () => {
       const res = await addEmployee(data);
       dispatch(addUser());
       toast.success("User Added successfully.");
     };
-    addEmployee();
+    try {
+      addEmployee();
+      toast.success(
+        `Successfully add employee: ${data.firstName + " " + data.lastName}`
+      );
+    } catch (err) {
+      dispatch(failRequest(err.message));
+      toast.error("Fail to add.");
+    }
   };
 };
+
+// export const FetchUserList = (page) => {
+//   return (dispatch) => {
+//     dispatch(makeRequest());
+
+//     const fetchEmployee = async () => {
+//       const res = await getEmployee(page);
+//       dispatch(geUserList(res.data.data));
+//     };
+//     try {
+//       fetchEmployee();
+//     } catch (err) {
+//       dispatch(failRequest(err.message));
+//       toast.error("Error in fetching data.");
+//     }
+//   };
+// };
+// getEmployee(page)

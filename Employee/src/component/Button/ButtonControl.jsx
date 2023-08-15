@@ -13,7 +13,7 @@ export default function ButtonControl() {
     // navigate("/", { replace: true });
     // toast.success("Logout successfully");
     confirmAlert({
-      title: "Do you want to Logout",
+      title: "Do you want to Logout?",
       message: "",
       buttons: [
         {
@@ -42,7 +42,7 @@ export default function ButtonControl() {
             navigate("/");
           }}
         >
-          <ArrowBackOutlinedIcon />
+          <ArrowBackOutlinedIcon /> Back
         </Button>
       </Tooltip>
       <Tooltip title="Logout" arrow>
@@ -53,7 +53,7 @@ export default function ButtonControl() {
             handleLogout();
           }}
         >
-          <ExitToAppRoundedIcon />
+          <ExitToAppRoundedIcon /> Logout
         </Button>
       </Tooltip>
     </Box>

@@ -13,6 +13,8 @@ body {
 
 .react-confirm-alert {
   transition: all 1.5s ease;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
 }
 
 .react-confirm-alert-overlay {

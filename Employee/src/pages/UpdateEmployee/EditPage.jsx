@@ -1,14 +1,14 @@
 import PublicLayout from "../../layout";
 import { Box } from "@mui/material";
-import UpdateEmployee from "./UpdateEmployee";
+import EditEmployee from "./EditEmployee";
 import ButtonControl from "../../component/Button/ButtonControl";
 // import PublicLayout from "../../layout";
 
-export default function UpdatePage() {
+export default function EditPage() {
   return (
     <>
       <PublicLayout>
-        <UpdateEmployee />
+        <EditEmployee />
       </PublicLayout>
     </>
   );

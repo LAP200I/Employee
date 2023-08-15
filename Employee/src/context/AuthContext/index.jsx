@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocalStorage } from "./useLocalStorage";
 
 export const AuthContext = React.createContext({});
 export const useAuth = () => useContext(AuthContext);
@@ -20,6 +18,7 @@ export function AuthContextProvider({ children }) {
   }, []);
 
   const value = useMemo(
+    //
     () => ({
       user,
       setUser: (newUser) => {

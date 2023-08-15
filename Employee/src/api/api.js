@@ -1,23 +1,22 @@
 
 import axios from 'axios';
 
-const BASE_URL = 'https://reqres.in/api';
+
+// const BASE_URL = 'https://reqres.in/api';
 
 const axiosClient = axios.create({
-    baseURL: BASE_URL,
+    // baseURL: BASE_URL,
+    baseURL: process.env.API_URL,
     headers: {
         'Content-Type': 'application/json',
         withCredentials: true
     }
-
-
 });
 
 axiosClient.interceptors.request.use(async (config) => {
     // Handle token here ...
     return config;
 })
-
 
 export const api = async (method, url, data) => {
     try {

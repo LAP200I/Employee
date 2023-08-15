@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import "@fontsource/inter";
 import { Provider } from "react-redux";
@@ -13,13 +8,10 @@ import { AuthContextProvider } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "./context/AuthContext";
-import UpdateEmployee from "./pages/UpdateEmployee/UpdateEmployee";
 import AddPage from "./pages/AddEmployee/AddPage";
 import Home from "./pages/Home/Home";
-import UpdatePage from "./pages/UpdateEmployee/UpdatePage";
-import { redirect } from "react-router-dom";
-import { ProtectedRoute } from "./ProtectedRoute";
-import { Navigate } from "react-router-dom";
+import EditPage from "./pages/UpdateEmployee/EditPage";
+import ViewDetailPage from "./pages/ViewDetail/ViewDetailPage";
 
 function App() {
   const { user } = useAuth();
@@ -32,17 +24,9 @@ function App() {
             <Routes>
               <Route path="/" exact element={<Home />} />
               <Route exact path="/employee" element={<ListEmployeePage />} />
-
-              {/* <Route
-                path="/employee"
-                element={
-                  <ProtectedRoute>
-                    <ListEmployeePage />
-                  </ProtectedRoute>
-                }
-              /> */}
-              <Route exact path="/employee/:id" element={<UpdatePage />} />
+              <Route exact path="/employee/edit/:id" element={<EditPage />} />
               <Route exact path="/employee/add" element={<AddPage />} />
+              <Route exact path="/employee/:id" element={<ViewDetailPage />} />
             </Routes>
           </Router>
         </Provider>

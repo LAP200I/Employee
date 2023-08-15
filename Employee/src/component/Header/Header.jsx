@@ -9,13 +9,13 @@ export default function Header() {
   const navigate = useNavigate();
   return (
     <Box
-      textAlign={"center"}
+      textalign={"center"}
       display={"flex"}
       flexDirection={"row"}
       sx={{ flexGrow: 1, mb: 2 }}
     >
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar textalign={"center"}>
           <Typography
             variant="h3"
             noWrap
@@ -24,6 +24,9 @@ export default function Header() {
               flexGrow: 1,
               display: { xs: "none", sm: "block" },
               cursor: "pointer",
+              maxWidth: "max-content",
+              width: "100%",
+              margin: "auto",
             }}
             color="#fff"
             onClick={() => {

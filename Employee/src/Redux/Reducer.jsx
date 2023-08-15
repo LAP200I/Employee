@@ -2,9 +2,9 @@ import { ActionType } from "./ActionType";
 
 const initialstate = {
   loading: true,
-  userlist: [],
-  userobj: {},
-  errmessage: "",
+  userObj: {},
+  userList: {},
+  errMessage: "",
 };
 
 export const Reducer = (state = initialstate, action) => {
@@ -18,20 +18,20 @@ export const Reducer = (state = initialstate, action) => {
       return {
         ...state,
         loading: false,
-        errmessage: action.payload,
+        errMessage: action.payload,
       };
-    case ActionType.GET_USER_LIST:
-      return {
-        loading: false,
-        errmessage: "",
-        userlist: action.payload,
-        userobj: "",
-      };
+    // case ActionType.GET_USER_LIST:
+    //   return {
+    //     loading: false,
+    //     errMessage: "",
+    //     // userlist: action.payload,
+    //     userobj: action.payload,
+    //   };
     case ActionType.GET_DATA:
       return {
         ...state,
         loading: false,
-        userobj: action.payload,
+        userList: action.payload,
       };
 
     case ActionType.DELETE_USER:
@@ -53,7 +53,7 @@ export const Reducer = (state = initialstate, action) => {
       return {
         ...state,
         loading: false,
-        userobj: action.payload,
+        userObj: action.payload,
       };
     default:
       return state;
