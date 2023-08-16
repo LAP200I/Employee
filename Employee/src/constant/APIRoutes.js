@@ -1,7 +1,9 @@
+
+const BASE_URL = 'https://reqres.in/api';
 export const APIRoutes = {
-  API_LOGIN: 'https://reqres.in/api/login',
-  API_REGISTER: 'https://reqres.in/api/register',
-  API_USERS: 'https://reqres.in/api/users',
+  API_LOGIN: `${BASE_URL}/login`,
+  API_REGISTER: `${BASE_URL}/register`,
+  API_USERS: `${BASE_URL}/users`,
 
 
 };

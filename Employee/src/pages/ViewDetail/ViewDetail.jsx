@@ -6,7 +6,9 @@ import { confirmAlert } from "react-confirm-alert";
 import { useEffect, useState } from "react";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+// import LinearProgress from "@mui/material/LinearProgress";
 import {
+  LinearProgress,
   CardActions,
   CardContent,
   CardMedia,
@@ -23,18 +25,12 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import Paper from "@mui/material/Paper";
-// import ListItemAvatar from "@mui/material/ListItemAvatar";
-// import EditIcon from "@material-ui/icons/Edit";
-// import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-import LinearProgress from "@mui/material/LinearProgress";
 
 const ViewDetail = (props) => {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [avatar, setAvatar] = useState("");
-  const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
   useEffect(() => {
@@ -48,40 +44,29 @@ const ViewDetail = (props) => {
       setAvatar(props.userObj.avatar);
     }
   }, [props.userObj]);
-  const handleMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
 
   const handleEditClick = () => {
     navigate(`/employee/edit/${id}`);
-    handleMenuClose();
   };
   const handleDeleteClick = () => {
     confirmAlert({
       title: "Confirm to delete",
-      message: "Are you sure to delete this user?",
+      message: "Are you sure to delete this employee?",
       buttons: [
         {
           label: "No",
-          onClick: () => {
-            // console.log("No");
-          },
+          onClick: () => {},
         },
         {
           label: "Yes",
           onClick: () => {
             props.removeUser(id);
-            toast.success("User Deleted Successfully");
+            toast.success("Successfully Deleted ");
             navigate("/employee");
           },
         },
       ],
     });
-    handleMenuClose();
   };
 
   return (
@@ -168,12 +153,10 @@ const StyledAvatar = styled(Avatar)(() => ({
 
 const StyledInfCard = styled(Card)(() => ({
   // height: 400,
-  maxWidth: "60%",
+  // maxWidth: "60%",
+  backgroundColor: "#008080",
   margin: "auto",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  // borderRadius: 20,
-  // border: "1px solid rgba(0, 0, 0, 0.1)",
-  // boxShadow: "none",
 }));

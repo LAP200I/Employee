@@ -9,24 +9,18 @@ const initialState = {
 
 export const Reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.MAKE_REQUEST:
+    case ActionType.MAKE_REQUEST: //for loading
       return {
         ...state,
         loading: true,
       };
-    case ActionType.FAIL_REQUEST:
+    case ActionType.FAIL_REQUEST: //for error
       return {
         ...state,
         loading: false,
         errMessage: action.payload,
       };
-    // case ActionType.GET_USER_LIST:
-    //   return {
-    //     loading: false,
-    //     errMessage: "",
-    //     // userlist: action.payload,
-    //     userobj: action.payload,
-    //   };
+
     case ActionType.GET_DATA:
       return {
         ...state,

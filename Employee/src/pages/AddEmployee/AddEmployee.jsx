@@ -88,16 +88,23 @@ const UpdateEmployee = () => {
                   onChange={(e) => setJob(e.target.value)}
                 />
               </Grid>
-              {/* <Grid item xs={12} sm={6}>
-                <TextField label="Email" fullWidth />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField label="Avatar" fullWidth />
-              </Grid> */}
             </Grid>
           </CardContent>
           <CardActions style={{ padding: "16px", textAlign: "right" }}>
-            <Button variant="contained" color="primary" type="submit">
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                marginLeft: "auto",
+              }}
+              type="submit"
+              disabled={
+                firstName === "" ||
+                lastName === "" ||
+                email === "" ||
+                job === ""
+              }
+            >
               Submit
             </Button>
           </CardActions>

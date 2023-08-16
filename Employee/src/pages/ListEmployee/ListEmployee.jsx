@@ -30,12 +30,6 @@ const ListEmployee = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    props.loadData(currentPage);
-    const pageCountData = Math.ceil(props.user.userList.total_pages);
-    setPageCount(pageCountData);
-  }, [currentPage, props.user.userList.total_pages]);
-
   const handlePageClick = (selectedPage) => {
     setCurrentPage(selectedPage);
   };
@@ -59,6 +53,11 @@ const ListEmployee = (props) => {
       ],
     });
   };
+  useEffect(() => {
+    props.loadData(currentPage);
+    const pageCountData = Math.ceil(props.user.userList.total_pages);
+    setPageCount(pageCountData);
+  }, [currentPage, props.user.userList.total_pages]);
 
   return props.user.loading ? (
     <>
@@ -86,13 +85,12 @@ const ListEmployee = (props) => {
               <StyledTableCell align="center">Avatar</StyledTableCell>
               <StyledTableCell align="center">Name</StyledTableCell>
               <StyledTableCell align="center">Email</StyledTableCell>
-              <StyledTableCell align="center">Status</StyledTableCell>
+              <StyledTableCell align="center">Position</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {props.user.userList.data.map((user) => {
-              // {props.userList.data.map((user) => {
               return (
                 <StyledTableRow align="center" key={user.id}>
                   <StyledTableCell align="center">{user.id}</StyledTableCell>
@@ -129,7 +127,7 @@ const ListEmployee = (props) => {
                     {user.first_name + " " + user.last_name}
                   </StyledTableCell>
                   <StyledTableCell align="center">{user.email}</StyledTableCell>
-                  <StyledTableCell align="center">Working</StyledTableCell>
+                  <StyledTableCell align="center">Staff</StyledTableCell>
                   <StyledTableCell align="center">
                     <ButtonGroup
                       variant="outlined"
@@ -197,7 +195,7 @@ const ListEmployee = (props) => {
     </>
   );
 };
-
+//access the state from the store
 const mapStateToProps = (state) => {
   return {
     user: state.user,
@@ -205,13 +203,12 @@ const mapStateToProps = (state) => {
     data: state.user.userList.data,
   };
 };
-
+// dispatch the action to the store
 const mapDispatchToProps = (dispatch) => ({
-  // loaduser: (currentPage) => dispatch(FetchUserList(currentPage)),
   removeUser: (code) => dispatch(RemoveUser(code)),
   loadData: (currentPage) => dispatch(FetchData(currentPage)),
 });
-
+//connect function is used to connect the component to the store
 export default connect(mapStateToProps, mapDispatchToProps)(ListEmployee);
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -227,7 +224,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
-    // background-color: rgba(0, 0, 0, 0.09);
   },
   // hide last border
   "&:last-child td, &:last-child th": {

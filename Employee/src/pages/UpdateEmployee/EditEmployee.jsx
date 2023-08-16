@@ -49,6 +49,7 @@ const EditEmployee = () => {
       name: firstName + " " + lastName,
       job: job,
     };
+
     dispatch(UpdateEmployee(code, data));
     navigate("/employee");
   };
@@ -84,7 +85,7 @@ const EditEmployee = () => {
             margin: "20px auto",
           }}
         >
-          <CardHeader title="Edit User" style={{ textAlign: "left" }} />
+          <CardHeader title="Edit Employee" style={{ textAlign: "left" }} />
           <CardContent>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
@@ -135,16 +136,26 @@ const EditEmployee = () => {
           </CardContent>
 
           <CardActions sx={{ padding: "16px" }}>
-            <Button variant="contained" color="primary" type="submit">
-              Save
-            </Button>
             <Button
+              sx={{
+                marginLeft: "auto",
+              }}
               variant="contained"
               color="error"
               type="reset"
               onClick={handleReset}
             >
               Reset
+            </Button>
+            <Button
+              sx={{
+                marginLeft: "auto",
+              }}
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              Save
             </Button>
           </CardActions>
         </Card>

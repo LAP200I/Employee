@@ -23,7 +23,7 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { login } from "../../api/Auth";
+import { login } from "../../api/AuthAPI";
 
 export default function LoginModal({ handleOpenRegisterModal }) {
   const [rememberMe, setRememberMe] = useState(false);
@@ -65,20 +65,21 @@ export default function LoginModal({ handleOpenRegisterModal }) {
   });
 
   const handleSubmit = async (values) => {
-    if (rememberMe) {
-      sessionStorage.setItem("email", values.email);
-      sessionStorage.setItem("password", values.password);
-    } else {
-      sessionStorage.removeItem("email");
-      sessionStorage.removeItem("password");
-    }
     try {
       let response = await login(values);
       setUser(response);
       navigate("/employee");
       toast.success("Login successfully.");
+      if (rememberMe) {
+        sessionStorage.setItem("email", values.email);
+        sessionStorage.setItem("password", values.password);
+      } else {
+        sessionStorage.removeItem("email");
+        sessionStorage.removeItem("password");
+      }
     } catch (error) {
       toast.error("Login failed.");
+      console.log(error.response.data);
     }
   };
 
