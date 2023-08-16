@@ -156,7 +156,7 @@ const ListEmployee = (props) => {
                           sx={{
                             "&:hover": {
                               color: "#fff",
-                              backgroundColor: "#B22222",
+                              backgroundColor: "tomato",
                             },
                           }}
                           onClick={() => {

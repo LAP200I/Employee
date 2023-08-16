@@ -96,9 +96,12 @@ const ViewDetail = (props) => {
               alt="avatar"
               sx={{
                 borderRadius: 1,
+                height: 200,
               }}
               image={avatar}
+              loading="lazy"
             />
+
             <CardContent sx={{ padding: "10px 0" }}>
               <Typography gutterBottom variant="h5" component="div">
                 {firstName + " " + lastName}

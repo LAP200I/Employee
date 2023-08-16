@@ -1,13 +1,13 @@
 import { ActionType } from "./ActionType";
 
-const initialstate = {
+const initialState = {
   loading: true,
   userObj: {},
   userList: {},
   errMessage: "",
 };
 
-export const Reducer = (state = initialstate, action) => {
+export const Reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.MAKE_REQUEST:
       return {

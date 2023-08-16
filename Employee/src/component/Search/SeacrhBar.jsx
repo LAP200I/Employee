@@ -1,6 +1,5 @@
 import {
   Container,
-  InputAdornment,
   TextField,
   debounce,
   Avatar,
@@ -49,13 +48,16 @@ export default function SearchBar() {
 
   const renderOption = (props, searchResults) => {
     return (
-      <li {...props} key={searchResults.id}>
+      <li
+        {...props}
+        key={searchResults.id}
+        onClick={() => {
+          navigate(`/employee/${searchResults.id}`);
+        }}
+      >
         <Box
           key={searchResults.id}
           sx={{ display: "flex", alignItems: "center" }}
-          onClick={() => {
-            navigate(`/employee/${searchResults.id}`);
-          }}
         >
           <Avatar alt="AVT" src={searchResults.avatar} />
           <Typography sx={{ ml: 2 }}>
@@ -76,30 +78,6 @@ export default function SearchBar() {
         display: "flex",
       }}
     >
-      {/* <TextField
-        id="search"
-        type="search"
-        label="Enter search Employee here"
-        value={searchTerm}
-        onChange={handleChange}
-        sx={{
-          marginRight: "auto",
-          alignSelf: "center",
-          backgroundColor: "white",
-          borderRadius: "5px",
-          width: "40%",
-          height: "100%",
-          boxShadow: "0 5px 5px rgba(0,0,0,0.75)",
-        }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-      /> */}
-
       <Autocomplete
         id="product-search"
         options={searchResults}
@@ -116,13 +94,6 @@ export default function SearchBar() {
           height: "100%",
           boxShadow: "0 5px 5px rgba(0,0,0,0.75)",
         }}
-        // InputProps={{
-        //   endAdornment: (
-        //     <InputAdornment position="end">
-        //       <SearchIcon />
-        //     </InputAdornment>
-        //   ),
-        // }}
         renderInput={(params) => (
           <TextField
             {...params}

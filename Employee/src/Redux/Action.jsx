@@ -7,6 +7,7 @@ import {
   updateEmployee,
   deleteEmployee,
 } from "../api/Employee";
+import { login, register } from "../api/Auth";
 
 export const makeRequest = () => {
   return {
@@ -19,6 +20,19 @@ export const failRequest = (err) => {
     payload: err,
   };
 };
+export const loginAction = (data) => {
+  return {
+    type: ActionType.LOGIN,
+    payload: data,
+  };
+};
+export const registerAction = (data) => {
+  return {
+    type: ActionType.REGISTER,
+    payload: data,
+  };
+};
+
 export const getData = (data) => {
   return {
     type: ActionType.GET_DATA,
@@ -52,6 +66,37 @@ export const getUserObj = (data) => {
     payload: data,
   };
 };
+
+export const Login = (data) => {
+  return (dispatch) => {
+    const loginFunc = async () => {
+      const res = await login(data);
+      dispatch(loginAction(res.data));
+      toast.success("Login successfully.");
+    };
+    try {
+      loginFunc();
+    } catch (err) {
+      dispatch(failRequest(err.message));
+    }
+  };
+};
+
+export const Register = (data) => {
+  return (dispatch) => {
+    const registerFunc = async () => {
+      const res = await register(data);
+      dispatch(registerAction(res.data));
+      toast.success("Register successfully.");
+    };
+    try {
+      registerFunc();
+    } catch (err) {
+      dispatch(failRequest(err.message));
+    }
+  };
+};
+
 export const FetchData = (page) => {
   return (dispatch) => {
     // dispatch(makeRequest());

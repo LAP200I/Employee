@@ -14,18 +14,29 @@ import {
   FormLabel,
   FormHelperText,
 } from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { register } from "../../api/Auth";
 
 export function RegisterModal({ open, onClose }) {
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   const initialValues = {
     firstName: "",
     lastName: "",
     username: "",
     email: "",
     password: "",
+    confirmPassword: "",
   };
 
   const validationSchema = Yup.object({
@@ -34,14 +45,21 @@ export function RegisterModal({ open, onClose }) {
     username: Yup.string().required("Required"),
     email: Yup.string().email("Invalid email address").required("Required"),
     password: Yup.string().required("Required"),
+    confirmPassword: Yup.string().oneOf(
+      [Yup.ref("password"), null],
+      "Passwords must match!"
+    ),
   });
 
   const handleSubmit = async (values) => {
     try {
       await register(values);
+      console.log(values);
       toast.success("Register successful");
       onClose();
     } catch (err) {
+      console.log(err.response.data);
+      console.log(err);
       toast.error(err.response.data);
     }
   };
@@ -84,7 +102,7 @@ export function RegisterModal({ open, onClose }) {
           >
             {({ values, errors, touched, handleChange, handleBlur }) => (
               <Form>
-                <Grid container spacing={2}>
+                <Grid container spacing={1} marginTop={2}>
                   <Grid item xs={6}>
                     <FormControl
                       fullWidth
@@ -99,6 +117,7 @@ export function RegisterModal({ open, onClose }) {
                         value={values.firstName}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        autoComplete="off"
                       />
                       <FormHelperText>
                         <ErrorMessage name="firstName" />
@@ -119,6 +138,7 @@ export function RegisterModal({ open, onClose }) {
                         value={values.lastName}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        autoComplete="off"
                       />
                       <FormHelperText>
                         <ErrorMessage name="lastName" />
@@ -157,15 +177,63 @@ export function RegisterModal({ open, onClose }) {
                         <Typography>Password</Typography>
                       </FormLabel>
                       <OutlinedInput
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         name="password"
                         value={values.password}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         autoComplete="off"
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                              {showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        }
                       />
                       <FormHelperText>
                         <ErrorMessage name="password" />
+                      </FormHelperText>
+                    </FormControl>
+                    <FormControl fullWidth>
+                      <FormLabel>
+                        <Typography>Confirm Password</Typography>
+                      </FormLabel>
+                      <OutlinedInput
+                        type={showPassword ? "text" : "password"}
+                        name="confirmPassword"
+                        value={values.confirmPassword}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        autoComplete="off"
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                              {showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                      />
+                      <FormHelperText>
+                        <ErrorMessage name="confirmPassword" />
                       </FormHelperText>
                     </FormControl>
                   </Grid>

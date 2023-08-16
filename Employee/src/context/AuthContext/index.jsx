@@ -28,28 +28,6 @@ export function AuthContextProvider({ children }) {
     }),
     [user]
   );
-  // const [user, setUser] = useLocalStorage("user", null);
-  // const navigate = useNavigate();
 
-  // // call this function when you want to authenticate the user
-  // const login = async (data) => {
-  //   setUser(data);
-  //   navigate("/employee");
-  // };
-
-  // // call this function to sign out logged in user
-  // const logout = () => {
-  //   setUser(null);
-  //   navigate("/", { replace: true });
-  // };
-
-  // const value = useMemo(
-  //   () => ({
-  //     user,
-  //     login,
-  //     logout,
-  //   }),
-  //   [user]
-  // );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

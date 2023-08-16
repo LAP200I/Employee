@@ -27,7 +27,6 @@ export default function ButtonControl() {
           onClick: () => {
             localStorage.removeItem("user");
             navigate("/", { replace: true });
-            toast.success("Logout successfully");
           },
         },
       ],
