@@ -14,7 +14,9 @@ import {
   FormLabel,
   FormHelperText,
   TextField,
+  Tooltip,
 } from "@mui/material";
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -22,28 +24,29 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import { Form, Field } from "react-final-form";
 import { register } from "../../api/AuthAPI";
+import { Validate } from "../Validate/Validate";
 
 export function RegisterModal({ open, onClose }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const handleClickShowConfirmPassword = () =>
     setShowConfirmPassword((show) => !show);
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
-  const onSubmit = useCallback(async (value) => {
+  const handleSubmit = async (value) => {
     try {
       await register(value);
       toast.success("Register successful");
       onClose();
     } catch (err) {
-      const errMess = err.response.data.error;
-      toast.error(JSON.stringify(errMess));
+      toast.error("Try again!");
     }
-  }, []);
-
+  };
   const validate = useCallback((value) => {
     const error = {};
     switch (true) {
@@ -69,7 +72,6 @@ export function RegisterModal({ open, onClose }) {
       case value.confirmPassword !== value.password:
         error.confirmPassword = "Password must match";
         break;
-
       default:
         break;
     }
@@ -88,31 +90,33 @@ export function RegisterModal({ open, onClose }) {
             alignItems: "center",
           }}
         >
-          {/* BUTTON CLOSE */}
-          <Button
-            sx={{
-              position: "absolute",
-              top: 0,
-              right: 0,
-              margin: 1,
-            }}
-            onClick={onClose}
-          >
-            <Typography>Close</Typography>
-          </Button>
+          <Tooltip title="Close">
+            <Button
+              sx={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                margin: 1,
+              }}
+              onClick={onClose}
+            >
+              <CancelRoundedIcon sx={{ fontSize: 40, color: "#2ec2a0" }} />
+            </Button>
+          </Tooltip>
 
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" marginBottom={3}>
             Register
           </Typography>
+
           <Form
-            onSubmit={onSubmit}
+            onSubmit={handleSubmit}
             validate={validate}
             render={({ handleSubmit, errors, hasValidationErrors }) => (
               <>
-                <Grid container spacing={2}>
+                <Grid container spacing={3}>
                   <Field
                     name="firstName"
                     render={({ input, meta }) => (
@@ -120,7 +124,7 @@ export function RegisterModal({ open, onClose }) {
                         <FormControl
                           fullWidth
                           required
-                          error={errors.firstName && meta.touched}
+                          error={Boolean(errors.firstName && meta.touched)}
                         >
                           <FormLabel>
                             <Typography>First Name</Typography>
@@ -140,7 +144,7 @@ export function RegisterModal({ open, onClose }) {
                         <FormControl
                           fullWidth
                           required
-                          error={errors.lastName && meta.touched}
+                          error={Boolean(errors.lastName && meta.touched)}
                         >
                           <FormLabel>
                             <Typography>Last Name</Typography>
@@ -161,7 +165,7 @@ export function RegisterModal({ open, onClose }) {
                         <FormControl
                           fullWidth
                           required
-                          error={errors.email && meta.touched}
+                          error={Boolean(errors.email && meta.touched)}
                         >
                           <FormLabel>
                             <Typography>Email</Typography>
@@ -181,7 +185,7 @@ export function RegisterModal({ open, onClose }) {
                         <FormControl
                           fullWidth
                           required
-                          error={errors.password && meta.touched}
+                          error={Boolean(errors.password && meta.touched)}
                         >
                           <FormLabel>
                             <Typography>Password</Typography>
@@ -220,21 +224,21 @@ export function RegisterModal({ open, onClose }) {
                         <FormControl
                           fullWidth
                           required
-                          error={errors.confirmPassword && meta.touched}
+                          error={Boolean(
+                            errors.confirmPassword && meta.touched
+                          )}
                         >
                           <FormLabel>
                             <Typography>Confirm Password</Typography>
                           </FormLabel>
                           <OutlinedInput
-                            type={
-                              showConfirmPassword ? "text" : "confirmPassword"
-                            }
+                            type={showConfirmPassword ? "text" : "password"}
                             name="confirmPassword"
                             {...input}
                             endAdornment={
                               <InputAdornment position="end">
                                 <IconButton
-                                  aria-label="toggle password visibility"
+                                  aria-label="toggle confirm password visibility"
                                   onClick={handleClickShowConfirmPassword}
                                   onMouseDown={handleMouseDownPassword}
                                   edge="end"
@@ -283,7 +287,7 @@ const StyledCard = styled(Card)(() => ({
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  maxWidth: 600,
   boxShadow: 24,
   p: 4,
 }));

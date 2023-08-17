@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
+import "./Header.css";
 export default function Header() {
   const navigate = useNavigate();
   return (
@@ -11,7 +11,7 @@ export default function Header() {
       flexDirection={"row"}
       sx={{ flexGrow: 1, mb: 2 }}
     >
-      <AppBar position="static">
+      <AppBar position="static" className="header">
         <Toolbar textalign={"center"}>
           <Typography
             variant="h3"

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FunctionAddUser } from "../../Redux/Action";
 import { useDispatch, useSelector } from "react-redux";
-
+import { Form, Field } from "react-final-form";
+import { Validate } from "../../component/Validate/Validate";
 import {
   TextField,
   Button,
@@ -14,25 +15,18 @@ import {
 } from "@mui/material";
 
 const UpdateEmployee = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [job, setJob] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const listEmp = useSelector((state) => state.user.userList);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (values) => {
     const data = {
       id: crypto.randomUUID(),
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      job: job,
+      firstName: values.firstName.trim(),
+      lastName: values.lastName.trim(),
+      email: values.email.trim(),
+      job: values.job.trim(),
       createdAt: new Date(),
     };
-
     try {
       dispatch(FunctionAddUser(data));
       console.log("data", data);
@@ -44,72 +38,101 @@ const UpdateEmployee = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <Card
-          sx={{
-            boxShadow: 3,
-            maxWidth: "80%",
-            margin: "20px auto",
-          }}
-        >
-          <CardHeader title="Add User" style={{ textAlign: "left" }} />
-          <CardContent>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="First Name"
-                  fullWidth
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
+      <Form
+        onSubmit={handleSubmit}
+        validate={Validate}
+        render={({ handleSubmit, errors, hasValidationErrors }) => (
+          // <form onSubmit={handleSubmit}>
+          <Card
+            sx={{
+              boxShadow: 3,
+              maxWidth: "80%",
+              margin: "auto",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            <CardHeader title="Add User" style={{ textAlign: "left" }} />
+            <CardContent>
+              <Grid container spacing={3}>
+                <Field
+                  name="firstName"
+                  render={({ input, meta }) => (
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        label="First Name"
+                        fullWidth
+                        {...input}
+                        error={Boolean(meta.touched && meta.error)}
+                        helperText={meta.touched && meta.error}
+                      />
+                    </Grid>
+                  )}
+                />
+                <Field
+                  name="lastName"
+                  render={({ input, meta }) => (
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        label="Last Name"
+                        fullWidth
+                        {...input}
+                        error={Boolean(meta.touched && meta.error)}
+                        helperText={meta.touched && meta.error}
+                      />
+                    </Grid>
+                  )}
+                />
+                <Field
+                  name="email"
+                  render={({ input, meta }) => (
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        label="Email"
+                        fullWidth
+                        {...input}
+                        error={Boolean(meta.touched && meta.error)}
+                        helperText={meta.touched && meta.error}
+                      />
+                    </Grid>
+                  )}
+                />
+                <Field
+                  name="job"
+                  render={({ input, meta }) => (
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        label="Job"
+                        fullWidth
+                        {...input}
+                        error={Boolean(meta.touched && meta.error)}
+                        helperText={meta.touched && meta.error}
+                      />
+                    </Grid>
+                  )}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Last Name"
-                  fullWidth
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Email"
-                  fullWidth
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Job"
-                  fullWidth
-                  value={job}
-                  onChange={(e) => setJob(e.target.value)}
-                />
-              </Grid>
-            </Grid>
-          </CardContent>
-          <CardActions style={{ padding: "16px", textAlign: "right" }}>
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{
-                marginLeft: "auto",
-              }}
-              type="submit"
-              disabled={
-                firstName === "" ||
-                lastName === "" ||
-                email === "" ||
-                job === ""
-              }
-            >
-              Submit
-            </Button>
-          </CardActions>
-        </Card>
-      </form>
+            </CardContent>
+            <CardActions style={{ padding: "16px", textAlign: "right" }}>
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{
+                  marginLeft: "auto",
+                }}
+                type="submit"
+                disabled={hasValidationErrors}
+                onClick={handleSubmit}
+              >
+                Submit
+              </Button>
+            </CardActions>
+          </Card>
+          // </form>
+        )}
+      />
     </>
   );
 };

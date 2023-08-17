@@ -36,8 +36,8 @@ const ListEmployee = (props) => {
 
   const handleDelete = (code, name) => {
     confirmAlert({
-      title: "Confirm to Delete",
-      message: `Are you sure to delete '${name}'?`,
+      // title: "Confirm to Delete",
+      title: `Are you sure to delete '${name}'?`,
       buttons: [
         {
           label: "No",

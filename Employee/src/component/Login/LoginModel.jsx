@@ -30,13 +30,12 @@ export default function LoginModal({ handleOpenRegisterModal }) {
   const [showPassword, setShowPassword] = useState(false);
   const { setUser } = useAuth();
   const navigate = useNavigate();
-
+  //show/hide password
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
+  //if user already login
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
@@ -44,6 +43,7 @@ export default function LoginModal({ handleOpenRegisterModal }) {
       navigate("/employee");
     }
   }, []);
+  //remember me
   useEffect(() => {
     const storedEmail = sessionStorage.getItem("email");
     const storedPassword = sessionStorage.getItem("password");
@@ -58,12 +58,12 @@ export default function LoginModal({ handleOpenRegisterModal }) {
     email: "",
     password: "",
   };
-
+  //validation
   const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email address").required("Required"),
     password: Yup.string().required("Required"),
   });
-
+  //submit
   const handleSubmit = async (values) => {
     try {
       let response = await login(values);
@@ -238,9 +238,11 @@ export default function LoginModal({ handleOpenRegisterModal }) {
 const StyledCard = styled(Card)(() => ({
   position: "absolute",
   top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
+
+  transform: "translate(-0%, -50%)",
   boxShadow: 24,
+  maxWidth: "80%",
+  margin: "auto",
+  width: 400,
   p: 4,
 }));

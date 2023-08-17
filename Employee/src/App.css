@@ -1,14 +1,17 @@
 #root {
   box-sizing: border-box;
   max-width: 100%;
+  height: 100vh;
 }
 
 body {
   box-sizing: border-box;
   max-width: 100%;
-  background-color: silver;
+  background: linear-gradient(135deg, #a9e2ebf5 0%, #aa867c 100%);
   margin: 0;
   padding: 0;
+  overflow: hidden;
+
 }
 
 .MuiInputLabel-formControl {
@@ -44,7 +47,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
+  padding: 10px 20px;
 
 
 }
@@ -62,6 +65,8 @@ body {
   cursor: pointer;
   background-color: #333;
   color: #fff;
+  margin: 0 20px;
+  border-radius: 5px;
 }
 
 .react-confirm-alert-button-group button:hover {

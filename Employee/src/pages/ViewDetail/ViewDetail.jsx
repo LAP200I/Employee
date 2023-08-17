@@ -75,13 +75,13 @@ const ViewDetail = (props) => {
         <LinearProgress />
       ) : (
         <StyledInfCard>
-          <Card sx={{ maxWidth: 345, boxShadow: 3 }}>
+          <Card sx={{ maxWidth: 400 }}>
             <CardMedia
               component="img"
               alt="avatar"
               sx={{
                 borderRadius: 1,
-                height: 200,
+                height: 400,
               }}
               image={avatar}
               loading="lazy"
@@ -103,7 +103,7 @@ const ViewDetail = (props) => {
               }}
             >
               <Button
-                variant="outlined"
+                variant="contained"
                 size="small"
                 onClick={() => {
                   handleEditClick();
@@ -114,7 +114,7 @@ const ViewDetail = (props) => {
                 Edit
               </Button>
               <Button
-                variant="outlined"
+                variant="contained"
                 size="small"
                 color="error"
                 onClick={() => {
@@ -153,9 +153,11 @@ const StyledAvatar = styled(Avatar)(() => ({
 
 const StyledInfCard = styled(Card)(() => ({
   // height: 400,
-  // maxWidth: "60%",
-  backgroundColor: "#008080",
-  margin: "auto",
+  // maxWidth: "50%",
+  // height: "100%",
+  boxShadow: "none",
+  backgroundColor: "transparent",
+  margin: "0",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",

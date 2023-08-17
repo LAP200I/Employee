@@ -105,13 +105,13 @@ export const RemoveUser = (code) => {
       const res = await deleteEmployee(code);
       dispatch(deleteUser());
     };
-    // try {
-    deleteEmployee();
-    //   toast.success("User Deleted successfully.");
-    // } catch (err) {
-    //   dispatch(failRequest(err.message));
-    //   toast.error("Fail to delete.");
-    // }
+    try {
+      deleteEmployee();
+      // toast.success("User Deleted successfully.");
+    } catch (err) {
+      dispatch(failRequest(err.message));
+      // toast.error("Fail to delete.");
+    }
   };
 };
 
@@ -134,21 +134,3 @@ export const FunctionAddUser = (data) => {
     }
   };
 };
-
-// export const FetchUserList = (page) => {
-//   return (dispatch) => {
-// dispatch(makeRequest());
-
-//     const fetchEmployee = async () => {
-//       const res = await getEmployee(page);
-//       dispatch(geUserList(res.data.data));
-//     };
-//     try {
-//       fetchEmployee();
-//     } catch (err) {
-//       dispatch(failRequest(err.message));
-//       toast.error("Error in fetching data.");
-//     }
-//   };
-// };
-// getEmployee(page)

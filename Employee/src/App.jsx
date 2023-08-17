@@ -9,7 +9,6 @@ import AddPage from "./pages/AddEmployee/AddPage";
 import EditPage from "./pages/UpdateEmployee/EditPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "@fontsource/inter";
 import "./App.css";
 
 function App() {
