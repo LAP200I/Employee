@@ -15,7 +15,7 @@ const addEmployee = (data) => axios.post(`${APIRoutes.API_USERS}`, data);
 
 // update
 const updateEmployee = (id, employee) =>
-  axios.put(`${APIRoutes.API_USERS}/${id}`, employee);
+  axios.put(`${APIRoutes.API_USERS}/${id}/`, employee);
 
 // delete
 const deleteEmployee = (id) => axios.delete(`${APIRoutes.API_USERS}/${id}`);

@@ -1,7 +1,7 @@
 import PublicLayout from "../../layout";
 import ViewDetail from "./ViewDetail";
 
-export default function ViewDetailPage() {
+export default function DetailPage() {
   return (
     <>
       <PublicLayout>

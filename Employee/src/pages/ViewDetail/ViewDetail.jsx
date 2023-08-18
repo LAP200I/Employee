@@ -33,10 +33,9 @@ const ViewDetail = (props) => {
   const [avatar, setAvatar] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
+
   useEffect(() => {
     props.loadUserObj(id);
-  }, [id]);
-  useEffect(() => {
     if (props.userObj) {
       setEmail(props.userObj.email);
       setFirstName(props.userObj.first_name);
@@ -71,7 +70,7 @@ const ViewDetail = (props) => {
 
   return (
     <>
-      {props.user.loading ? (
+      {props.userObj.loading ? (
         <LinearProgress />
       ) : (
         <StyledInfCard>
@@ -83,7 +82,7 @@ const ViewDetail = (props) => {
                 borderRadius: 1,
                 height: 400,
               }}
-              image={avatar}
+              image={avatar || "https://source.unsplash.com/random?wallpapers"}
               loading="lazy"
             />
 

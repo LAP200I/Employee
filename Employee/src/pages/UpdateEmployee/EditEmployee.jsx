@@ -23,7 +23,7 @@ const EditEmployee = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [job, setJob] = useState("");
+  // const [job, setJob] = useState("");
   const [avatar, setAvatar] = useState("");
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -34,7 +34,6 @@ const EditEmployee = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const code = useParams();
-
   //extract data from the Redux store state
   const userObj = useSelector((state) => state.user.userObj);
 
@@ -43,8 +42,7 @@ const EditEmployee = () => {
       name: values.firstName.trim() + " " + values.lastName.trim(),
       job: values.job.trim(),
     };
-    console.log("data", data);
-    dispatch(UpdateEmployee(code, data));
+    dispatch(UpdateEmployee(code.id, data));
     navigate("/employee");
   };
   const handleImageChange = (e) => {
@@ -62,8 +60,6 @@ const EditEmployee = () => {
 
   useEffect(() => {
     dispatch(FetchUserObj(code.id));
-  }, []);
-  useEffect(() => {
     if (userObj) {
       setId(userObj.id);
       setFirstName(userObj.first_name);
@@ -71,7 +67,7 @@ const EditEmployee = () => {
       setEmail(userObj.email);
       setAvatar(userObj.avatar);
     }
-  }, []);
+  }, [userObj]);
 
   return (
     <>
@@ -82,6 +78,7 @@ const EditEmployee = () => {
           lastName: userObj?.last_name || "",
           email: userObj?.email || "",
           job: "",
+          avatar: userObj?.avatar || "",
         }}
         validate={Validate}
         render={({ handleSubmit, form, submitting, pristine, invalid }) => (
@@ -89,24 +86,25 @@ const EditEmployee = () => {
           <Card
             sx={{
               boxShadow: 3,
-              maxWidth: "80%",
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
+              maxWidth: "60%",
+              maxHeight: "90%",
+              margin: "auto",
+              // position: "absolute",
+              // top: "50%",
+              // left: "50%",
+              // transform: "translate(-50%, -50%)",
             }}
           >
             <CardHeader title="Edit Employee" style={{ textAlign: "left" }} />
             <Avatar
               sx={{
-                width: 200,
-                height: 200,
-                marginLeft: "auto",
-                marginRight: "auto",
+                width: 100,
+                height: 100,
+                margin: "auto",
                 marginTop: "16px",
               }}
               alt="Remy Sharp"
-              src={avatar}
+              src={avatar || "https://www.w3schools.com/howto/img_avatar.png"}
             />
             <Button
               onClick={handleOpen}
@@ -165,9 +163,11 @@ const EditEmployee = () => {
                   <Field name="firstName">
                     {({ input, meta }) => (
                       <TextField
-                        sx={{
-                          boxShadow: 3,
-                        }}
+                        sx={
+                          {
+                            // boxShadow: 3,
+                          }
+                        }
                         label="First Name"
                         {...input}
                         fullWidth
@@ -181,9 +181,11 @@ const EditEmployee = () => {
                   <Field name="lastName">
                     {({ input, meta }) => (
                       <TextField
-                        sx={{
-                          boxShadow: 3,
-                        }}
+                        sx={
+                          {
+                            // boxShadow: 3,
+                          }
+                        }
                         label="Last Name"
                         {...input}
                         fullWidth
@@ -197,9 +199,11 @@ const EditEmployee = () => {
                   <Field name="email">
                     {({ input, meta }) => (
                       <TextField
-                        sx={{
-                          boxShadow: 3,
-                        }}
+                        sx={
+                          {
+                            // boxShadow: 3,
+                          }
+                        }
                         label="Email"
                         {...input}
                         fullWidth
@@ -213,9 +217,11 @@ const EditEmployee = () => {
                   <Field name="job">
                     {({ input, meta }) => (
                       <TextField
-                        sx={{
-                          boxShadow: 3,
-                        }}
+                        sx={
+                          {
+                            // boxShadow: 3,
+                          }
+                        }
                         label="Job"
                         {...input}
                         error={Boolean(meta.touched && meta.error)}

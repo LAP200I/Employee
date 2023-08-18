@@ -29,7 +29,6 @@ const UpdateEmployee = () => {
     };
     try {
       dispatch(FunctionAddUser(data));
-      console.log("data", data);
       navigate("/employee");
     } catch (err) {
       toast.error("Fail to update.");
@@ -46,12 +45,8 @@ const UpdateEmployee = () => {
           <Card
             sx={{
               boxShadow: 3,
-              maxWidth: "80%",
+              maxWidth: "70%",
               margin: "auto",
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
             }}
           >
             <CardHeader title="Add User" style={{ textAlign: "left" }} />

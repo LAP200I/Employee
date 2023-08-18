@@ -236,13 +236,14 @@ export default function LoginModal({ handleOpenRegisterModal }) {
 }
 
 const StyledCard = styled(Card)(() => ({
-  position: "absolute",
-  top: "50%",
+  // position: "absolute",
+  // top: "50%",
 
-  transform: "translate(-0%, -50%)",
+  // transform: "translate(-0%, -50%)",
+  top: "50%",
   boxShadow: 24,
   maxWidth: "80%",
   margin: "auto",
-  width: 400,
+  // width: 400,
   p: 4,
 }));

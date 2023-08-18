@@ -73,7 +73,7 @@ export default function SearchBar() {
       sx={{
         padding: "10px 0 !important",
         margin: "0px",
-        alignItems: "center",
+        alignItems: "flex-end",
         maxWidth: "100% !important",
         display: "flex",
       }}
@@ -91,7 +91,7 @@ export default function SearchBar() {
           backgroundColor: "white",
           borderRadius: "5px",
           width: "40%",
-          height: "100%",
+          height: "80%",
           boxShadow: "0 5px 5px rgba(0,0,0,0.75)",
         }}
         renderInput={(params) => (

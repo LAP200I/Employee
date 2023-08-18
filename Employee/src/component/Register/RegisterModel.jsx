@@ -77,7 +77,7 @@ export function RegisterModal({ open, onClose }) {
     }
     return error;
   }, []);
-
+  // console.log("render");
   return (
     <Modal open={open} onClose={onClose}>
       <StyledCard>

@@ -17,7 +17,7 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FetchData, RemoveUser } from "../../Redux/Action";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -33,10 +33,8 @@ const ListEmployee = (props) => {
   const handlePageClick = (selectedPage) => {
     setCurrentPage(selectedPage);
   };
-
   const handleDelete = (code, name) => {
     confirmAlert({
-      // title: "Confirm to Delete",
       title: `Are you sure to delete '${name}'?`,
       buttons: [
         {
@@ -57,7 +55,7 @@ const ListEmployee = (props) => {
     props.loadData(currentPage);
     const pageCountData = Math.ceil(props.user.userList.total_pages);
     setPageCount(pageCountData);
-  }, [currentPage, props.user.userList.total_pages]);
+  }, [currentPage, props.user.userList.total_pages]); //for render total pages at first time
 
   return props.user.loading ? (
     <>
@@ -110,6 +108,7 @@ const ListEmployee = (props) => {
                               "&:hover": {
                                 cursor: "pointer",
                                 border: "2px solid #008080",
+                                transition: "all 0.3s ease-in-out",
                               },
                               border: "2px solid #ccc",
                             }}
@@ -138,8 +137,8 @@ const ListEmployee = (props) => {
                         <Button
                           sx={{
                             "&:hover": {
-                              color: "#fff",
-                              backgroundColor: "#008080",
+                              color: "white",
+                              backgroundColor: "primary.main",
                             },
                           }}
                           onClick={() => {
@@ -153,8 +152,8 @@ const ListEmployee = (props) => {
                         <Button
                           sx={{
                             "&:hover": {
-                              color: "#fff",
-                              backgroundColor: "tomato",
+                              color: "white",
+                              backgroundColor: "danger.main",
                             },
                           }}
                           onClick={() => {

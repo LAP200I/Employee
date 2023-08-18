@@ -33,7 +33,12 @@ export default function ButtonControl() {
     });
   };
   return (
-    <Box display="flex" justifyContent="space-between" margin={2}>
+    <Box
+      display="flex"
+      // alignItems="flex-end"
+      justifyContent="space-between"
+      margin={2}
+    >
       <Tooltip title="Back" arrow>
         <Button
           variant="contained"

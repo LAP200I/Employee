@@ -2,7 +2,6 @@ import { createTheme } from '@mui/material/styles';
 const themeColors = {
   primary: {
     base: '#008080',
-    // base: '#5048E5',
     lightness2: '#93CAFE',
     lightness3: '#C9E4FE',
     lightness4: '#E0EFFE',
@@ -75,6 +74,8 @@ const themeColors = {
     lightness4: '#E0F0E3',
     lightness5: '#E8F4EA',
   },
+
+
 };
 
 const themeOptions = {
@@ -149,6 +150,9 @@ const themeOptions = {
     action: {
       disabled: themeColors.grey.darkness2,
     },
+    background: {
+      default: themeColors.white.base,
+    }
   },
   components: {
     MuiButton: {

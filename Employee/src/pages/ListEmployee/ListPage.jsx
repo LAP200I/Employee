@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import SearchBar from "../../component/Search/SeacrhBar";
 import "./index.css";
 
-export default function ListEmployeePage() {
+export default function ListPage() {
   return (
     <>
       <PublicLayout>
@@ -15,14 +15,7 @@ export default function ListEmployeePage() {
             margin: "20px auto",
           }}
         >
-          <SearchBar
-            sx={
-              {
-                // margin: "20px 0",
-                // bgcolor: "background.paper",
-              }
-            }
-          />
+          <SearchBar />
 
           <ListEmployee />
         </Box>

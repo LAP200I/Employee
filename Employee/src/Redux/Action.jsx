@@ -66,7 +66,6 @@ export const FetchData = (page) => {
     }
   };
 };
-
 export const FetchUserObj = (code) => {
   return (dispatch) => {
     const fetchEmployee = async () => {
@@ -75,10 +74,8 @@ export const FetchUserObj = (code) => {
     };
     try {
       fetchEmployee();
-      // toast.success("User Fetched successfully.");
     } catch (err) {
       dispatch(failRequest(err.message));
-      // toast.error("Fail to fetch.");
     }
   };
 };
@@ -87,10 +84,13 @@ export const UpdateEmployee = (code, data) => {
   return (dispatch) => {
     const updateEmp = async () => {
       const res = await updateEmployee(code, data);
+      console.log("put", res);
+
       dispatch(updateUser());
     };
     try {
       updateEmp();
+      console.log("put");
       toast.success(" Updated successfully.");
     } catch (err) {
       dispatch(failRequest(err.message));
@@ -101,16 +101,15 @@ export const UpdateEmployee = (code, data) => {
 
 export const RemoveUser = (code) => {
   return (dispatch) => {
-    const deleteEmployee = async () => {
+    const deleteEmpl = async () => {
       const res = await deleteEmployee(code);
       dispatch(deleteUser());
+      console.log("delete", res);
     };
     try {
-      deleteEmployee();
-      // toast.success("User Deleted successfully.");
+      deleteEmpl();
     } catch (err) {
       dispatch(failRequest(err.message));
-      // toast.error("Fail to delete.");
     }
   };
 };
@@ -118,13 +117,13 @@ export const RemoveUser = (code) => {
 export const FunctionAddUser = (data) => {
   return (dispatch) => {
     dispatch(makeRequest());
-    const addEmployee = async () => {
+    const addEmpl = async () => {
       const res = await addEmployee(data);
       dispatch(addUser());
-      toast.success("User Added successfully.");
+      console.log("post", res);
     };
     try {
-      addEmployee();
+      addEmpl();
       toast.success(
         `Successfully add employee: ${data.firstName + " " + data.lastName}`
       );
