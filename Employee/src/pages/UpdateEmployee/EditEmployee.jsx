@@ -1,6 +1,4 @@
 import { Form, Field } from "react-final-form";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { FetchUserObj, UpdateEmployee } from "../../Redux/Action";
 import {
   TextField,
   Button,
@@ -13,62 +11,22 @@ import {
   CardContent,
   CardActions,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 import { Validate } from "../../component/Validate/Validate";
-import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
-const EditEmployee = () => {
-  const [id, setId] = useState(0);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  // const [job, setJob] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [open, setOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [imageForUpload, setImageForUpload] = useState(null);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const code = useParams();
-  //extract data from the Redux store state
-  const userObj = useSelector((state) => state.user.userObj);
-
-  const handleSubmit = (values) => {
-    const data = {
-      name: values.firstName.trim() + " " + values.lastName.trim(),
-      job: values.job.trim(),
-    };
-    dispatch(UpdateEmployee(code.id, data));
-    navigate("/employee");
-  };
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImageForUpload(file);
-    setSelectedImage(URL.createObjectURL(file));
-  };
-  const handleSubmitImage = () => {
-    handleClose();
-    toast.success("Uploading successfully.");
-  };
-  const handleReset = (form) => {
-    form.reset();
-  };
-
-  useEffect(() => {
-    dispatch(FetchUserObj(code.id));
-    if (userObj) {
-      setId(userObj.id);
-      setFirstName(userObj.first_name);
-      setLastName(userObj.last_name);
-      setEmail(userObj.email);
-      setAvatar(userObj.avatar);
-    }
-  }, [userObj]);
-
+const EditEmployee = ({
+  avatar,
+  // userObj,
+  handleSubmit,
+  handleReset,
+  handleOpen,
+  handleClose,
+  open,
+  selectedImage,
+  handleImageChange,
+  handleSubmitImage,
+}) => {
+  let userObj = useSelector((state) => state.user.userObj);
   return (
     <>
       <Form
@@ -82,17 +40,12 @@ const EditEmployee = () => {
         }}
         validate={Validate}
         render={({ handleSubmit, form, submitting, pristine, invalid }) => (
-          // <form onSubmit={onSubmit}>
           <Card
             sx={{
               boxShadow: 3,
               maxWidth: "60%",
               maxHeight: "90%",
               margin: "auto",
-              // position: "absolute",
-              // top: "50%",
-              // left: "50%",
-              // transform: "translate(-50%, -50%)",
             }}
           >
             <CardHeader title="Edit Employee" style={{ textAlign: "left" }} />
@@ -260,7 +213,6 @@ const EditEmployee = () => {
               </Button>
             </CardActions>
           </Card>
-          // </form>
         )}
       />
     </>

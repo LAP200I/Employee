@@ -90,7 +90,6 @@ export const UpdateEmployee = (code, data) => {
     };
     try {
       updateEmp();
-      console.log("put");
       toast.success(" Updated successfully.");
     } catch (err) {
       dispatch(failRequest(err.message));

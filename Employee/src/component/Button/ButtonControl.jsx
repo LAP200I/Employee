@@ -1,7 +1,5 @@
-import { Button, Box, Tooltip } from "@mui/material";
-
+import { Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import ArrowBackOutlinedIcon from "@material-ui/icons/ArrowBackOutlined";
 import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
 import { confirmAlert } from "react-confirm-alert";
@@ -9,9 +7,6 @@ import { confirmAlert } from "react-confirm-alert";
 export default function ButtonControl() {
   const navigate = useNavigate();
   const handleLogout = () => {
-    // localStorage.removeItem("user");
-    // navigate("/", { replace: true });
-    // toast.success("Logout successfully");
     confirmAlert({
       title: "Do you want to Logout?",
       message: "",
@@ -32,6 +27,13 @@ export default function ButtonControl() {
       ],
     });
   };
+  const handleBack = () => {
+    navigate(-1);
+  };
+  const path = window.location.pathname;
+  // if (path === "/employee") { disable back button} else enable
+  const isEmployeePath = path === "/employee";
+
   return (
     <Box
       display="flex"
@@ -39,27 +41,23 @@ export default function ButtonControl() {
       justifyContent="space-between"
       margin={2}
     >
-      <Tooltip title="Back" arrow>
-        <Button
-          variant="contained"
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          <ArrowBackOutlinedIcon /> Back
-        </Button>
-      </Tooltip>
-      <Tooltip title="Logout" arrow>
-        <Button
-          variant="contained"
-          color="error"
-          onClick={() => {
-            handleLogout();
-          }}
-        >
-          <ExitToAppRoundedIcon /> Logout
-        </Button>
-      </Tooltip>
+      <Button
+        className="back-btn"
+        disabled={isEmployeePath}
+        variant="contained"
+        onClick={handleBack}
+      >
+        <ArrowBackOutlinedIcon /> Back
+      </Button>
+      <Button
+        variant="contained"
+        color="error"
+        onClick={() => {
+          handleLogout();
+        }}
+      >
+        <ExitToAppRoundedIcon /> Logout
+      </Button>
     </Box>
   );
 }

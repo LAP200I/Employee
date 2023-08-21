@@ -2,9 +2,10 @@ import PublicLayout from "../../layout";
 import ListEmployee from "./ListEmployee";
 import { Box } from "@mui/material";
 import SearchBar from "../../component/Search/SeacrhBar";
+
 import "./index.css";
 
-export default function ListPage() {
+function ListPage() {
   return (
     <>
       <PublicLayout>
@@ -23,3 +24,6 @@ export default function ListPage() {
     </>
   );
 }
+//access the state from the store
+
+export default ListPage;

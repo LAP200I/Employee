@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect, useState, useMemo } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -16,20 +15,19 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
-import { connect } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { FetchData, RemoveUser } from "../../Redux/Action";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { confirmAlert } from "react-confirm-alert";
+import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { Tooltip } from "@material-ui/core";
-
-const ListEmployee = (props) => {
+import { connect } from "react-redux";
+import { FetchData, RemoveUser } from "../../Redux/Action";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { confirmAlert } from "react-confirm-alert";
+function ListEmployee(props) {
   const [pageCount, setPageCount] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
-
   const handlePageClick = (selectedPage) => {
     setCurrentPage(selectedPage);
   };
@@ -88,7 +86,7 @@ const ListEmployee = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.user.userList.data.map((user) => {
+            {props.data.map((user) => {
               return (
                 <StyledTableRow align="center" key={user.id}>
                   <StyledTableCell align="center">{user.id}</StyledTableCell>
@@ -108,7 +106,6 @@ const ListEmployee = (props) => {
                               "&:hover": {
                                 cursor: "pointer",
                                 border: "2px solid #008080",
-                                transition: "all 0.3s ease-in-out",
                               },
                               border: "2px solid #ccc",
                             }}
@@ -137,8 +134,8 @@ const ListEmployee = (props) => {
                         <Button
                           sx={{
                             "&:hover": {
-                              color: "white",
-                              backgroundColor: "primary.main",
+                              color: "#fff",
+                              backgroundColor: "#008080",
                             },
                           }}
                           onClick={() => {
@@ -152,8 +149,8 @@ const ListEmployee = (props) => {
                         <Button
                           sx={{
                             "&:hover": {
-                              color: "white",
-                              backgroundColor: "danger.main",
+                              color: "#fff",
+                              backgroundColor: "tomato",
                             },
                           }}
                           onClick={() => {
@@ -193,8 +190,9 @@ const ListEmployee = (props) => {
       />
     </>
   );
-};
-//access the state from the store
+}
+
+//connect function is used to connect the component to the store
 const mapStateToProps = (state) => {
   return {
     user: state.user,
@@ -207,7 +205,6 @@ const mapDispatchToProps = (dispatch) => ({
   removeUser: (code) => dispatch(RemoveUser(code)),
   loadData: (currentPage) => dispatch(FetchData(currentPage)),
 });
-//connect function is used to connect the component to the store
 export default connect(mapStateToProps, mapDispatchToProps)(ListEmployee);
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
